@@ -239,7 +239,13 @@ curl -i http://localhost:3000/health
 
 ## 🌐 Deploy Web (Opcional)
 
-**Cloudflare Workers:** Implante como API globalmente distribuída
+### Opções de Hospedagem
+
+**Cloudflare Workers:** Implante como API globalmente distribuída (serverless)
+
+**VPS/Cloud Server:** Hospede em servidor dedicado para controle total
+
+#### Cloudflare Workers (Serverless)
 
 ```bash
 # 1. Instalar dependências
@@ -305,6 +311,49 @@ curl -X POST https://your-worker.workers.dev/mcp \
 - Configurável via environment variables
 - KV-based para escalabilidade
 - Desativável com `MCP_DISABLE_RATE_LIMIT=true`
+
+#### VPS/Cloud Server
+
+Para deploy em servidor VPS (Node.js nativo):
+
+```bash
+# Clone o repositório
+git clone https://github.com/cristianoaredes/mcp-camara.git
+cd mcp-camara
+
+# Instale dependências
+npm install
+
+# Build
+npm run build
+
+# Configure variáveis de ambiente
+export MCP_TRANSPORT=http
+export MCP_HTTP_PORT=3000
+
+# Execute o servidor
+node build/lib/bin/mcp-camara.js
+```
+
+**Opções de VPS recomendadas:**
+- 🚀 [Hostinger VPS KVM](https://www.hostinger.com.br/cart?product=vps%3Avps_kvm_2&period=12&referral_type=cart_link&REFERRALCODE=FQLCRISTIRC3&referral_id=019a73b2-a3cd-72b8-8141-76eb55275046) - A partir de 2 vCPU, 4GB RAM
+- ☁️ AWS EC2, Google Cloud, Azure
+- 🐳 DigitalOcean Droplets
+- 📦 Oracle Cloud (free tier disponível)
+
+**Configuração com PM2 (recomendado):**
+
+```bash
+# Instalar PM2
+npm install -g pm2
+
+# Iniciar com PM2
+MCP_TRANSPORT=http MCP_HTTP_PORT=3000 pm2 start build/lib/bin/mcp-camara.js --name mcp-camara
+
+# Configurar para iniciar no boot
+pm2 startup
+pm2 save
+```
 
 ## 📚 Documentação
 
