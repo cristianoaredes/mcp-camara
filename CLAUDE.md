@@ -6,6 +6,142 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 MCP Server implementation for Brazilian Chamber of Deputies (Câmara dos Deputados) Open Data API. A TypeScript-based Model Context Protocol server providing 62 tools across 7 categories to query legislative data, published as NPM package and deployable to Cloudflare Workers.
 
+**📦 Published**: `@aredes.me/mcp-camara` on NPM
+**🌐 Production**: https://mcp-camara.your-subdomain.workers.dev (Cloudflare Workers)
+**🛠️ Local Dev**: STDIO mode via `npm run dev`
+
+---
+
+## ⚡ Quick Start
+
+### Option 1: Use Published Package (Recommended)
+
+```json
+// ~/Library/Application Support/Claude/claude_desktop_config.json
+{
+  "mcpServers": {
+    "camara-deputados": {
+      "command": "npx",
+      "args": ["@aredes.me/mcp-camara"],
+      "enabled": true
+    }
+  }
+}
+```
+
+**Reinicie o Claude Desktop** e teste: _"Liste os deputados de São Paulo"_
+
+### Option 2: Local Development
+
+```bash
+# Clone and install
+git clone https://github.com/aredes/mcp-camara.git
+cd mcp-camara
+npm install
+
+# Run in dev mode
+npm run dev
+
+# In another terminal, test
+curl http://localhost:3000/health
+```
+
+---
+
+## 🎯 Ferramentas Disponíveis (62 total)
+
+### 👥 Deputados (15 ferramentas)
+- `deputados_listar` - Listar com filtros
+- `deputados_obter` - Detalhes completos
+- `deputados_despesas` - Gastos e reembolsos
+- `deputados_discursos` - Discursos em plenário
+- `deputados_eventos` - Participação em eventos
+- `deputados_foto` - URL da foto oficial
+- E mais 9 ferramentas...
+
+### 📜 Proposições (10 ferramentas)
+- `proposicoes_listar` - Buscar PL, PEC, etc.
+- `proposicoes_obter` - Texto integral
+- `proposicoes_votacoes` - Histórico de votações
+- `proposicoes_tramitacoes` - Tramitação atual
+- E mais 6 ferramentas...
+
+### 🗳️ Votações, 🏛️ Comissões, 🎯 Partidos, 📅 Eventos, 📚 Referências
+Ver lista completa: [README.md](./README.md#ferramentas-disponíveis)
+
+---
+
+## 📝 Configuração Claude Desktop
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "camara-deputados": {
+      "command": "npx",
+      "args": ["@aredes.me/mcp-camara"],
+      "enabled": true
+    }
+  }
+}
+```
+
+**Ou para desenvolvimento local com HTTP transport**:
+```json
+{
+  "mcpServers": {
+    "camara-deputados-dev": {
+      "command": "node",
+      "args": ["/path/to/mcp-camara/build/lib/bin/mcp-camara.js"],
+      "env": {
+        "MCP_TRANSPORT": "stdio",
+        "LOG_LEVEL": "DEBUG"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+**Importante**: Sempre reinicie o Claude Desktop após alterar a configuração.
+
+---
+
+## 💡 Exemplos Práticos de Uso
+
+### Exemplo 1: Pesquisar Deputados
+```
+User: "Quais deputados de São Paulo são do PT?"
+Claude usa: deputados_listar({ siglaUf: "SP", siglaPartido: "PT" })
+→ Retorna lista de deputados filtrados
+```
+
+### Exemplo 2: Analisar Despesas
+```
+User: "Mostre os gastos do deputado 220593 em 2024"
+Claude usa: deputados_despesas({ id: 220593, ano: 2024 })
+→ Retorna detalhamento de despesas
+```
+
+### Exemplo 3: Acompanhar Proposição
+```
+User: "Qual o status da PEC 45/2019?"
+Claude executa:
+1. proposicoes_listar({ siglaTipo: "PEC", numero: 45, ano: 2019 })
+2. proposicoes_tramitacoes({ id: <id_retornado> })
+→ Histórico completo de tramitação
+```
+
+### Exemplo 4: Análise de Votação
+```
+User: "Como os partidos votaram na última reforma tributária?"
+Claude usa: votacoes_listar + votacoes_orientacoes
+→ Orientações de voto por bancada
+```
+
+---
+
 ## Architecture
 
 ### Multi-Transport Architecture
