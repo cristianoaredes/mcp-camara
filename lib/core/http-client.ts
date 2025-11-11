@@ -39,7 +39,9 @@ export class CamaraHttpClient {
    * Build full URL with properly encoded query parameters
    */
   buildURL(endpoint: string, params?: QueryParams): string {
-    const url = new URL(endpoint, this.config.baseURL);
+    // Ensure endpoint doesn't start with / to properly append to baseURL
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    const url = new URL(cleanEndpoint, this.config.baseURL + '/');
     
     if (params) {
       Object.entries(params).forEach(([key, value]) => {

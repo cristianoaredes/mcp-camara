@@ -14,7 +14,17 @@ async function main() {
 
   // Handle --version flag
   if (args.includes('--version') || args.includes('-v')) {
-    console.log('mcp-camara version 1.0.0');
+    // Read version from package.json
+    const { readFileSync } = await import('fs');
+    const { fileURLToPath } = await import('url');
+    const { dirname, join } = await import('path');
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    // In build: build/lib/bin -> ../../../package.json
+    // In source: lib/bin -> ../../package.json
+    const packageJsonPath = join(__dirname, '../../../package.json');
+    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+    console.log(`mcp-camara version ${packageJson.version}`);
     process.exit(0);
   }
 
