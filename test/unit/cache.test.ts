@@ -4,8 +4,8 @@
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { CacheLayer } from '../lib/core/cache.js';
-import { CacheError } from '../lib/shared/utils/errors.js';
+import { CacheLayer } from '../../lib/core/cache.js';
+import { CacheError } from '../../lib/shared/utils/errors.js';
 
 describe('CacheLayer', () => {
   beforeEach(() => {

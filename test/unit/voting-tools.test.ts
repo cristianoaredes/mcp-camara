@@ -3,11 +3,11 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { votingTools } from '../lib/tools/voting-tools.js';
-import type { ToolContext } from '../lib/core/tools.js';
-import type { CamaraHttpClient } from '../lib/core/http-client.js';
-import type { CacheLayer } from '../lib/core/cache.js';
-import type { Logger } from '../lib/shared/utils/logger.js';
+import { votingTools } from '../../lib/tools/voting-tools.js';
+import type { ToolContext } from '../../lib/core/tools.js';
+import type { CamaraHttpClient } from '../../lib/core/http-client.js';
+import type { CacheLayer } from '../../lib/core/cache.js';
+import type { Logger } from '../../lib/shared/utils/logger.js';
 
 describe('Voting Tools', () => {
   let mockContext: ToolContext;

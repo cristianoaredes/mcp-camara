@@ -44,7 +44,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aredes/mcp-camara.git"
+    "url": "git+https://github.com/aredes/mcp-camara.git"
   },
   "bugs": {
     "url": "https://github.com/aredes/mcp-camara/issues"

@@ -4,9 +4,9 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { CamaraServer } from '../lib/core/mcp-server.js';
-import { HttpAdapter } from '../lib/adapters/cli.js';
-import type { MCPServerConfig } from '../lib/config/index.js';
+import { CamaraServer } from '../../lib/core/mcp-server.js';
+import { HttpAdapter } from '../../lib/adapters/cli.js';
+import type { MCPServerConfig } from '../../lib/config/index.js';
 
 describe('HttpAdapter', () => {
   let server: CamaraServer;

@@ -3,8 +3,8 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { CamaraHttpClient } from '../lib/core/http-client.js';
-import { CamaraAPIError, RateLimitError } from '../lib/shared/utils/errors.js';
+import { CamaraHttpClient } from '../../lib/core/http-client.js';
+import { CamaraAPIError, RateLimitError } from '../../lib/shared/utils/errors.js';
 
 describe('CamaraHttpClient', () => {
   let client: CamaraHttpClient;

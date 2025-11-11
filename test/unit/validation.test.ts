@@ -25,8 +25,8 @@ import {
   validateInput,
   validateToolInput,
   type ToolName,
-} from '../lib/core/validation.js';
-import { ValidationError } from '../lib/shared/utils/errors.js';
+} from '../../lib/core/validation.js';
+import { ValidationError } from '../../lib/shared/utils/errors.js';
 
 describe('Common Validation Schemas', () => {
   describe('DeputyIdSchema', () => {

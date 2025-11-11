@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { generateOpenAPISpec } from '../lib/workers/openapi-spec.js';
+import { generateOpenAPISpec } from '../../lib/workers/openapi-spec.js';
 
 describe('OpenAPI Specification', () => {
   it('should generate valid OpenAPI 3.0 spec', () => {

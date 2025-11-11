@@ -4,8 +4,8 @@
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { CamaraServer } from '../lib/core/mcp-server.js';
-import type { MCPServerConfig } from '../lib/config/index.js';
+import { CamaraServer } from '../../lib/core/mcp-server.js';
+import type { MCPServerConfig } from '../../lib/config/index.js';
 
 describe('End-to-End Integration Tests', () => {
   describe('Complete tool execution flow with caching', () => {

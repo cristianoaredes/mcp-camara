@@ -3,11 +3,11 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { deputyTools } from '../lib/tools/deputy-tools.js';
-import type { ToolContext } from '../lib/core/tools.js';
-import type { CamaraHttpClient } from '../lib/core/http-client.js';
-import type { CacheLayer } from '../lib/core/cache.js';
-import type { Logger } from '../lib/shared/utils/logger.js';
+import { deputyTools } from '../../lib/tools/deputy-tools.js';
+import type { ToolContext } from '../../lib/core/tools.js';
+import type { CamaraHttpClient } from '../../lib/core/http-client.js';
+import type { CacheLayer } from '../../lib/core/cache.js';
+import type { Logger } from '../../lib/shared/utils/logger.js';
 
 describe('Deputy Tools', () => {
   let mockContext: ToolContext;

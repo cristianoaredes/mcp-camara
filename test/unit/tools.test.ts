@@ -16,7 +16,7 @@ import {
   EVENT_TOOLS,
   REFERENCE_TOOLS,
   ALL_TOOLS,
-} from '../lib/core/tools.js';
+} from '../../lib/core/tools.js';
 import { z } from 'zod';
 
 describe('ToolRegistry', () => {

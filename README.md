@@ -6,51 +6,37 @@
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-orange.svg)](https://workers.cloudflare.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **🏛️ Model Context Protocol (MCP) server for Brazilian Chamber of Deputies Open Data** — Bring comprehensive legislative information directly into Claude Desktop, Cursor, Windsurf, Continue.dev and other AI assistants.
+> **🏛️ Servidor Model Context Protocol (MCP) para acesso aos Dados Abertos da Câmara dos Deputados do Brasil** — Integre informações legislativas completas diretamente em Claude Desktop, Cursor, Windsurf, Continue.dev e outros assistentes de IA.
 
-> **🚀 Multi-platform deployment: NPM package, Cloudflare Workers, Smithery.**
+> **🚀 Implantação multiplataforma: Pacote NPM, Cloudflare Workers, Smithery.**
 
-*[English](#english) | [Português](./README.pt-BR.md)*
+*[Português](#português) | [English](./README.en.md)*
 
 ---
 
-## English
+## Português
 
-🤖 **Model Context Protocol server for Brazilian Chamber of Deputies Open Data.** Access comprehensive legislative information including deputies, bills, votes, committees, parties, and events directly in Claude Desktop, Cursor, Windsurf, Continue.dev and any MCP-compatible assistant.
+🇧🇷 **Servidor MCP para consulta de dados legislativos da Câmara dos Deputados do Brasil.** Acesse informações sobre deputados, proposições, votações, comissões, partidos e eventos legislativos em minutos através de Claude Desktop, Cursor, Windsurf, Continue.dev e qualquer cliente compatível com MCP.
 
-## ✨ Features
-
-- **🏛️ 62 Tools** across 7 categories for comprehensive legislative data access
-- **🚀 Multiple Transports:** STDIO, HTTP, and SSE support for maximum flexibility
-- **💾 Smart Caching:** Configurable LRU cache with TTL to reduce API calls
-- **🔒 Rate Limiting:** Built-in protection against API abuse
-- **☁️ Cloudflare Workers:** Deploy as a globally distributed, scalable API
-- **🔍 Type Safe:** Full TypeScript implementation with strict typing
-- **✅ Validated Inputs:** Zod-based schema validation for all tools
-- **📖 OpenAPI Spec:** Auto-generated API documentation
-- **🌐 REST API:** Direct HTTP access to all endpoints
-- **🔄 Real-time SSE:** Server-Sent Events for streaming connections
-- **📊 Comprehensive Testing:** 388 tests covering all functionality
-
-## ⚡ Quick Install
+## ⚡ Instalação Rápida
 
 ```bash
 npm install -g @aredes.me/mcp-camara
 ```
 
-Or run directly with NPX:
+Ou execute diretamente com NPX:
 
 ```bash
 npx @aredes.me/mcp-camara
 ```
 
-### Via Smithery (1-click)
+### Via Smithery (1 clique)
 
 ```bash
 npx -y @smithery/cli install @aredes.me/mcp-camara --client claude
 ```
 
-## 🔌 IDE / MCP Client Configuration
+## 🔌 Configuração por IDE / Cliente MCP
 
 ### 🤖 Claude Desktop
 
@@ -65,7 +51,7 @@ npx -y @smithery/cli install @aredes.me/mcp-camara --client claude
 }
 ```
 
-**Location:** `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
+**Localização:** `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
 ### 🎯 Cursor IDE
 
@@ -109,473 +95,326 @@ npx -y @smithery/cli install @aredes.me/mcp-camara --client claude
 
 ### 🤖 ChatGPT MCP
 
-To use with ChatGPT, configure the Cloudflare Workers server as a remote endpoint:
+Para usar com ChatGPT, configure o servidor Cloudflare Workers como endpoint remoto:
 
-1. **Deploy to Cloudflare Workers:** `npm run workers:deploy:prod`
-2. **Configure in ChatGPT:**
-   - Server URL: `https://mcp-camara.your-subdomain.workers.dev`
-   - ChatGPT will automatically detect OAuth and MCP endpoints
-3. **Configure API Key** (optional, via Workers environment variables)
+1. **Deploy no Cloudflare Workers:** `npm run workers:deploy:prod`
+2. **Configure no ChatGPT:**
+   - URL do servidor: `https://mcp-camara.your-subdomain.workers.dev`
+   - O ChatGPT detectará automaticamente os endpoints OAuth e MCP
+3. **Configure API Key** (opcional, via environment variables no Workers)
 
-**Available REST APIs:**
-- `GET /deputados/{id}` - Get deputy details
-- `GET /proposicoes/{id}` - Get proposition details
-- `GET /votacoes/{id}` - Get voting details
-- `GET /eventos/{id}` - Get event details
+**APIs REST disponíveis:**
+- `GET /deputados/{id}` - Consulta dados de deputado
+- `GET /proposicoes/{id}` - Consulta dados de proposição
+- `GET /votacoes/{id}` - Consulta dados de votação
+- `GET /eventos/{id}` - Consulta dados de evento
 
-**✅ Quick test:**
+**✅ Teste rápido:**
 ```
-Can you search for information about deputy with ID 220593?
-```
-
-## 🎯 How It Works
-
-The MCP Câmara server acts as a bridge between AI assistants and the Brazilian Chamber of Deputies Open Data API:
-
-```
-┌─────────────────┐         ┌──────────────┐         ┌─────────────────┐
-│   AI Assistant  │ ◄─MCP──►│  MCP Server  │ ◄─HTTP─►│  Câmara API     │
-│ (Claude/Cursor) │         │  (This Tool) │         │ (Open Data)     │
-└─────────────────┘         └──────────────┘         └─────────────────┘
+Pode buscar informações sobre o deputado com ID 220593?
 ```
 
-**What you can do:**
-- Ask natural language questions about Brazilian legislation
-- Get real-time data about deputies, bills, and votes
-- Analyze voting patterns and legislative activity
-- Track expenses and parliamentary activities
-- Research political parties and committees
+## 🛠️ Ferramentas Disponíveis
 
-**Example queries:**
-- "Show me all bills about education from 2024"
-- "What are the recent expenses of deputy João Silva?"
-- "List all votes on environmental legislation"
-- "Which committees is deputy Maria Santos part of?"
+### 👥 Deputados (15 ferramentas)
+- 🔍 **`deputados_listar`** — Lista deputados com filtros (nome, partido, UF, legislatura)
+- 📋 **`deputados_obter`** — Detalhes completos de um deputado
+- 💰 **`deputados_despesas`** — Despesas e reembolsos
+- 🎤 **`deputados_discursos`** — Discursos em plenário
+- 📅 **`deputados_eventos`** — Participação em eventos
+- 📊 **`deputados_frentes`** — Frentes parlamentares
+- 🏛️ **`deputados_orgaos`** — Órgãos e comissões
+- 📜 **`deputados_profissoes`** — Lista de profissões
+- E mais...
 
-## 🛠️ Available Tools
+### 📜 Proposições (10 ferramentas)
+- 🔍 **`proposicoes_listar`** — Lista proposições com filtros
+- 📋 **`proposicoes_obter`** — Detalhes de uma proposição
+- 👥 **`proposicoes_autores`** — Autores da proposição
+- 📄 **`proposicoes_relacionadas`** — Proposições relacionadas
+- 🗳️ **`proposicoes_votacoes`** — Votações da proposição
+- E mais...
 
-### 👥 Deputies (15 tools)
+### 🗳️ Votações (4 ferramentas)
+- 🔍 **`votacoes_listar`** — Lista votações
+- 📋 **`votacoes_obter`** — Detalhes de uma votação
+- 👥 **`votacoes_votos`** — Votos individuais
+- 📊 **`votacoes_orientacoes`** — Orientações de bancadas
 
-Get comprehensive information about Brazilian federal deputies:
+### 🏛️ Comissões (5 ferramentas)
+- 🔍 **`orgaos_listar`** — Lista comissões e órgãos
+- 📋 **`orgaos_obter`** — Detalhes de uma comissão
+- 👥 **`orgaos_membros`** — Membros da comissão
+- 📅 **`orgaos_eventos`** — Eventos da comissão
+- 🗳️ **`orgaos_votacoes`** — Votações da comissão
 
-- 🔍 **`deputados_listar`** — List deputies with filters (name, party, state, legislature)
-- 📋 **`deputados_obter`** — Complete deputy details including biography and contact
-- 💰 **`deputados_despesas`** — Expenses and reimbursements with detailed breakdown
-- 🎤 **`deputados_discursos`** — Floor speeches and parliamentary interventions
-- 📅 **`deputados_eventos`** — Event participation and attendance records
-- 📊 **`deputados_frentes`** — Parliamentary fronts and caucuses membership
-- 🏛️ **`deputados_orgaos`** — Bodies and committees participation
-- 📜 **`deputados_profissoes`** — List of professions declared by deputies
-- 📄 **`deputados_ocupacoes`** — Professional occupations
-- 🎓 **`deputados_historico`** — Legislative history and mandates
-- 📸 **`deputados_foto`** — Official photograph URL
-- 🗳️ **`deputados_mesa`** — Board positions held
-- 📋 **`deputados_liderancas`** — Leadership positions
-- 🏅 **`deputados_cargos`** — Current and past positions
-- 📊 **`deputados_votacoes`** — Voting record and positions
+### 🎯 Partidos (6 ferramentas)
+- 🔍 **`partidos_listar`** — Lista partidos políticos
+- 📋 **`partidos_obter`** — Detalhes de um partido
+- 👥 **`partidos_membros`** — Membros do partido
+- 🤝 **`blocos_listar`** — Lista blocos partidários
+- 📋 **`blocos_obter`** — Detalhes de um bloco
+- E mais...
 
-### 📜 Propositions (10 tools)
+### 📅 Eventos (7 ferramentas)
+- 🔍 **`eventos_listar`** — Lista eventos legislativos
+- 📋 **`eventos_obter`** — Detalhes de um evento
+- 🏛️ **`eventos_orgaos`** — Eventos por órgão
+- 👥 **`eventos_deputados`** — Eventos por deputado
+- 📜 **`eventos_pauta`** — Pauta do evento
+- E mais...
 
-Access legislative proposals, bills, and amendments:
+### 📚 Dados de Referência (15 ferramentas)
+- 🏛️ **`referencias_legislaturas`** — Lista legislaturas
+- 🎯 **`referencias_situacoes_deputado`** — Situações de deputados
+- 📊 **`referencias_situacoes_evento`** — Situações de eventos
+- 🗳️ **`referencias_situacoes_proposicao`** — Situações de proposições
+- 📋 **`referencias_tipos_proposicao`** — Tipos de proposições
+- E mais...
 
-- 🔍 **`proposicoes_listar`** — List propositions with advanced filters (type, year, author, status)
-- 📋 **`proposicoes_obter`** — Complete proposition details including full text and status
-- 👥 **`proposicoes_autores`** — Authors and co-authors of propositions
-- 📄 **`proposicoes_relacionadas`** — Related propositions and dependencies
-- 🗳️ **`proposicoes_votacoes`** — All votes on a proposition
-- 📝 **`proposicoes_tramitacoes`** — Processing history and current status
-- 🏛️ **`proposicoes_temas`** — Thematic classification
-- 📎 **`proposicoes_arquivos`** — Attached documents and files
-- 🔗 **`proposicoes_referencias`** — Legal references and citations
-- 📊 **`proposicoes_tipos`** — Types of legislative proposals
+## 🧪 Testes em Linha de Comando
 
-### 🗳️ Votings (4 tools)
-
-Track voting sessions and results:
-
-- 🔍 **`votacoes_listar`** — List all voting sessions with filters by date and proposition
-- 📋 **`votacoes_obter`** — Detailed voting results including approval status
-- 👥 **`votacoes_votos`** — Individual deputy votes (yes, no, abstention, absence)
-- 📊 **`votacoes_orientacoes`** — Party leadership voting recommendations
-
-### 🏛️ Committees (5 tools)
-
-Monitor legislative committees and working groups:
-
-- �  **`orgaos_listar`** — List all committees, commissions, and legislative bodies
-- � **`oorgaos_obter`** — Committee details including jurisdiction and composition
-- 👥 **`orgaos_membros`** — Current and historical committee membership
-- 📅 **`orgaos_eventos`** — Committee meetings, hearings, and sessions
-- 🗳️ **`orgaos_votacoes`** — Votes held in committee sessions
-
-### 🎯 Parties (6 tools)
-
-Analyze political parties and parliamentary blocs:
-
-- 🔍 **`partidos_listar`** — List all registered political parties
-- 📋 **`partidos_obter`** — Party details including ideology and leadership
-- 👥 **`partidos_membros`** — Current party members and affiliations
-- 🤝 **`blocos_listar`** — List parliamentary blocs and coalitions
-- 📋 **`blocos_obter`** — Bloc composition and member parties
-- 🏛️ **`partidos_liderancas`** — Party leadership positions
-
-### 📅 Events (7 tools)
-
-Track legislative calendar and activities:
-
-- � **``eventos_listar`** — List all legislative events with date and type filters
-- �  **`eventos_obter`** — Detailed event information including location and participants
-- 🏛️ **`eventos_orgaos`** — Events organized by specific committees or bodies
-- 👥 **`eventos_deputados`** — Events with specific deputy participation
-- 📜 **`eventos_pauta`** — Event agenda and discussion items
-- 📝 **`eventos_situacoes`** — Event status (scheduled, ongoing, completed, cancelled)
-- 🎯 **`eventos_tipos`** — Types of legislative events
-
-### 📚 Reference Data (15 tools)
-
-Access lookup tables and classification systems:
-
-- 🏛️ **`referencias_legislaturas`** — List all legislatures with date ranges
-- 🎯 **`referencias_situacoes_deputado`** — Deputy status codes (active, licensed, etc.)
-- 📊 **`referencias_situacoes_evento`** — Event status classifications
-- 🗳️ **`referencias_situacoes_proposicao`** — Proposition status codes
-- 📋 **`referencias_tipos_proposicao`** — Types of legislative proposals (PL, PEC, etc.)
-- 🏛️ **`referencias_tipos_orgao`** — Types of legislative bodies
-- 📅 **`referencias_tipos_evento`** — Event type classifications
-- 🗳️ **`referencias_tipos_votacao`** — Voting types and procedures
-- 🎓 **`referencias_escolaridades`** — Education levels
-- 🌍 **`referencias_ufs`** — Brazilian states and territories
-- 🏙️ **`referencias_municipios`** — Municipalities by state
-- 📊 **`referencias_situacoes_orgao`** — Committee status codes
-- 🎯 **`referencias_situacoes_membro`** — Membership status codes
-- 📜 **`referencias_cargos_orgao`** — Committee position types
-- 🏅 **`referencias_tipos_lideranca`** — Leadership position types
-
-## 🧪 Command Line Testing
-
-### Local HTTP + SSE server
+### Servidor HTTP + SSE local
 
 ```bash
 npm run build
 MCP_TRANSPORT=http MCP_HTTP_PORT=3000 node build/lib/bin/mcp-camara.js
 ```
 
-In another terminal:
+Em outro terminal:
 
 ```bash
-# List tools
+# Listar ferramentas
 curl http://localhost:3000/mcp -X POST -H "Content-Type: application/json" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
 
-# Get deputy
+# Buscar deputado
 curl http://localhost:3000/deputados/220593
 
-# List propositions
+# Listar proposições
 curl http://localhost:3000/mcp -X POST -H "Content-Type: application/json" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": "proposicoes_listar", "arguments": {"siglaTipo": "PL", "ano": 2024}}}'
 ```
 
-### Quick health check
+### Health check rápido
 
 ```bash
 curl -i http://localhost:3000/health
 ```
 
-## 🌐 Web Deployment (Optional)
+## 🌐 Deploy Web (Opcional)
 
-**Cloudflare Workers:** Deploy as a globally distributed API
+**Cloudflare Workers:** Implante como API globalmente distribuída
 
 ```bash
-# 1. Install dependencies
+# 1. Instalar dependências
 npm install
 
-# 2. Build the project
+# 2. Build do projeto
 npm run build
 
-# 3. Create KV namespaces
+# 3. Criar namespaces KV
 npm run workers:kv:create
 
-# 4. Deploy to development
+# 4. Deploy para desenvolvimento
 npm run workers:deploy:dev
 
-# 5. Deploy to production
+# 5. Deploy para produção
 npm run workers:deploy:prod
 ```
 
-**Workers Features:**
+**Recursos do Workers:**
 - 🔗 **REST API:** `/deputados/{id}` · `/proposicoes/{id}` · `/votacoes/{id}` · `/eventos/{id}`
 - 🤖 **OpenAPI:** `/openapi.json`
 - 📊 **Health:** `/health`
-- 🔐 **API Key Authentication:** Optional protection against abuse
-- ⚡ **Rate Limiting:** Configurable via KV
-- 💾 **Cache:** LRU cache with configurable TTL
+- 🔐 **API Key Authentication:** Protegido contra abuso (opcional)
+- ⚡ **Rate Limiting:** Configurável via KV
+- 💾 **Cache:** LRU cache com TTL configurável
 
-**Smithery:** `smithery.yaml` for single-click deployment.
+**Smithery:** `smithery.yaml` para deploy single-click.
 
-### 🚀 For ChatGPT MCP
+### 🚀 Para ChatGPT MCP
 
 ```bash
-# 1. Deploy to Cloudflare
+# 1. Deploy no Cloudflare
 npm run build
 npm run workers:deploy:prod
 
-# 2. Configure in ChatGPT:
+# 2. Configure no ChatGPT:
 # - Server URL: https://your-subdomain.workers.dev
-# - ChatGPT will automatically detect OAuth + MCP endpoints
+# - O ChatGPT detectará automaticamente OAuth + MCP endpoints
 ```
 
-### 🔒 Security (Cloudflare Workers)
+### 🔒 Segurança (Cloudflare Workers)
 
 **API Key Authentication:**
-- **Protected:** REST endpoints (`/deputados/*`, `/proposicoes/*`, `/votacoes/*`, `/eventos/*`)
-- **Unprotected:** MCP protocol (`/mcp`, `/sse`) - for AI assistant compatibility
+- **Protegidos:** Endpoints REST (`/deputados/*`, `/proposicoes/*`, `/votacoes/*`, `/eventos/*`)
+- **Não protegidos:** Protocolo MCP (`/mcp`, `/sse`) - para compatibilidade com AI assistants
 
 ```bash
 # Configure API key
 wrangler secret put MCP_API_KEY
 
-# Use via headers (REST endpoints only):
+# Use via headers (apenas para endpoints REST):
 curl -H "X-API-Key: your-key" https://your-worker.workers.dev/deputados/220593
-# or
+# ou
 curl -H "Authorization: Bearer your-key" https://your-worker.workers.dev/deputados/220593
 
-# MCP endpoints don't require authentication:
+# Endpoints MCP não precisam de autenticação:
 curl -X POST https://your-worker.workers.dev/mcp \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
 ```
 
 **Rate Limiting:**
-- Configurable via environment variables
-- KV-based for scalability
-- Can be disabled with `MCP_DISABLE_RATE_LIMIT=true`
+- Configurável via environment variables
+- KV-based para escalabilidade
+- Desativável com `MCP_DISABLE_RATE_LIMIT=true`
 
-## 📚 Documentation
+## 📚 Documentação
 
-- **[Configuration Guide](./docs/CONFIGURATION.md)** — Environment variables and settings
-- **[Usage Examples](./docs/USAGE_EXAMPLES.md)** — Practical examples and use cases
-- **[API Documentation](./docs/API.md)** — Complete tool reference
-- **[Cloudflare Deployment](./docs/CLOUDFLARE_DEPLOYMENT.md)** — Deployment guide
-- **[HTTP Transport](./docs/HTTP_TRANSPORT.md)** — HTTP server documentation
-- **[SSE Transport](./docs/SSE_TRANSPORT.md)** — Server-Sent Events
-- **[Troubleshooting](./docs/TROUBLESHOOTING.md)** — Common issues and solutions
+- **[Guia de Configuração](./docs/CONFIGURATION.md)** — Variáveis de ambiente e configurações
+- **[Exemplos de Uso](./docs/USAGE_EXAMPLES.md)** — Casos práticos e exemplos
+- **[Documentação da API](./docs/API.md)** — Referência completa de ferramentas
+- **[Deploy Cloudflare](./docs/CLOUDFLARE_DEPLOYMENT.md)** — Guia de implantação
+- **[Transporte HTTP](./docs/HTTP_TRANSPORT.md)** — Documentação do servidor HTTP
+- **[Transporte SSE](./docs/SSE_TRANSPORT.md)** — Server-Sent Events
+- **[Solução de Problemas](./docs/TROUBLESHOOTING.md)** — Problemas comuns
 
-## 💼 Use Cases
+## 💼 Casos de Uso
 
-- **📊 Legislative Analysis** — Track bills, votes, and parliamentary activity in real-time
-- **🔍 Political Research** — Investigate deputy and party history with comprehensive data
-- **📰 Data Journalism** — Extract data for investigative reporting and fact-checking
-- **🎓 Academic Research** — Analyze legislative behavior, voting patterns, and political dynamics
-- **👥 Public Transparency** — Monitor deputy expenses, activities, and accountability
-- **🤖 Civic Chatbots** — Build AI assistants for legislative information and civic engagement
-- **📱 Mobile Apps** — Integrate legislative data into mobile applications
-- **📈 Analytics Dashboards** — Create visualizations and reports on parliamentary activity
-- **🔔 Monitoring Systems** — Set up alerts for specific bills, votes, or deputy activities
-- **🎯 Advocacy Tools** — Track legislation relevant to specific causes or organizations
+- **📊 Análise Legislativa** — Acompanhe proposições, votações e atividade parlamentar
+- **🔍 Pesquisa Política** — Investigue histórico de deputados e partidos
+- **📰 Jornalismo de Dados** — Extraia dados para reportagens investigativas
+- **🎓 Pesquisa Acadêmica** — Analise comportamento legislativo e padrões de votação
+- **👥 Transparência Pública** — Monitore gastos e atividades de deputados
+- **🤖 Chatbots Cívicos** — Crie assistentes para informação legislativa
 
-## 🔧 Configuration
+## 🤝 Contribuição
 
-The server can be configured via environment variables:
+Contribuições são bem-vindas! Por favor, leia [CONTRIBUTING.md](./CONTRIBUTING.md) para detalhes sobre nosso código de conduta e processo de submissão de pull requests.
+
+## 📄 Licença & Créditos
+
+- MIT License — [LICENSE](./LICENSE)
+- Dados fornecidos pela [API de Dados Abertos da Câmara dos Deputados](https://dadosabertos.camara.leg.br/)
+- Baseado no [Model Context Protocol](https://modelcontextprotocol.io)
+
+## 👨‍💻 Autor
+
+| Cristiano Aredes |
+|:---:|
+| [![Cristiano Aredes](https://github.com/cristianoaredes.png?size=100)](https://github.com/cristianoaredes) |
+| [LinkedIn](https://www.linkedin.com/in/cristianoaredes/) · [cristiano@aredes.me](mailto:cristiano@aredes.me) |
+
+---
+
+## English
+
+🤖 **Model Context Protocol server for Brazilian Chamber of Deputies Open Data.** Access comprehensive legislative information including deputies, bills, votes, committees, parties, and events directly in Claude Desktop, Cursor, Windsurf, Continue.dev and any MCP-compatible assistant.
+
+### ⚡ Quick Install
 
 ```bash
-# Transport mode (stdio, http, sse)
-MCP_TRANSPORT=stdio
-
-# HTTP/SSE server port
-MCP_HTTP_PORT=3000
-
-# Câmara API base URL
-CAMARA_API_BASE_URL=https://dadosabertos.camara.leg.br/api/v2
-
-# Cache settings
-MCP_CACHE_TTL=3600          # Cache TTL in seconds
-MCP_DISABLE_CACHE=false     # Disable caching
-
-# Rate limiting
-MCP_DISABLE_RATE_LIMIT=false
-
-# Logging
-LOG_LEVEL=INFO              # DEBUG, INFO, WARN, ERROR
+npm install -g @aredes.me/mcp-camara
 ```
 
-See [Configuration Guide](./docs/CONFIGURATION.md) for complete details.
-
-## 🛠️ Development
-
-### Prerequisites
-
-- Node.js >= 18.0.0
-- npm or yarn
-- TypeScript 5.7+
-
-### Setup
+Or via NPX:
 
 ```bash
-# Clone the repository
-git clone https://github.com/cristianoaredes/mcp-camara.git
-cd mcp-camara
+npx @aredes.me/mcp-camara
+```
 
+### IDE Configuration
+
+**Claude Desktop / Cursor / Windsurf:**
+```json
+{
+  "mcpServers": {
+    "camara": {
+      "command": "npx",
+      "args": ["@aredes.me/mcp-camara"]
+    }
+  }
+}
+```
+
+**Continue.dev:**
+```json
+{
+  "mcpServers": [
+    {
+      "name": "camara",
+      "command": "npx",
+      "args": ["@aredes.me/mcp-camara"]
+    }
+  ]
+}
+```
+
+**Test prompt:**
+```
+Can you search for information about deputy with ID 220593?
+```
+
+### Key Features
+
+- **🏛️ 62 Tools** across 7 categories for comprehensive legislative data access
+- **🚀 Multiple Transports:** STDIO, HTTP, and SSE support
+- **💾 Smart Caching:** Configurable caching with LRU eviction
+- **🔒 Rate Limiting:** Built-in protection against API abuse
+- **☁️ Cloudflare Workers:** Deploy as a globally distributed API
+- **🔍 Type Safe:** Full TypeScript implementation with strict typing
+- **✅ Validated Inputs:** Zod-based schema validation for all tools
+
+### Tool Categories
+
+- **👥 Deputies (15 tools):** Information about deputies, expenses, speeches, events
+- **📜 Propositions (10 tools):** Legislative proposals, bills, amendments
+- **🗳️ Votings (4 tools):** Voting records and results
+- **🏛️ Committees (5 tools):** Legislative committees and their activities
+- **🎯 Parties (6 tools):** Political parties and blocs
+- **📅 Events (7 tools):** Legislative events, meetings, hearings
+- **📚 Reference Data (15 tools):** Lookup tables and classifications
+
+### Web Deployment
+
+**Cloudflare Workers:** Deploy as a globally distributed, scalable API
+
+```bash
 # Install dependencies
 npm install
 
 # Build the project
 npm run build
 
-# Run tests
-npm test
+# Create KV namespaces
+npm run workers:kv:create
 
-# Run in development mode
-npm run dev
+# Deploy to production
+npm run workers:deploy:prod
 ```
 
-### Testing
+**Features:**
+- 🔗 **REST API:** `/deputados/{id}` · `/proposicoes/{id}` · `/votacoes/{id}` · `/eventos/{id}`
+- 🤖 **OpenAPI spec:** `/openapi.json`
+- 📊 **Health check:** `/health`
+- 🔐 **API Key Authentication:** Optional protection for REST endpoints
+- ⚡ **Rate Limiting:** Configurable via KV storage
+- 💾 **Caching:** LRU cache with configurable TTL
 
-```bash
-# Run all tests
-npm test
+### Documentation & Support
 
-# Run tests in watch mode
-npm run test:watch
+- [Configuration Guide](./docs/CONFIGURATION.md) — Environment variables and settings
+- [Usage Examples](./docs/USAGE_EXAMPLES.md) — Practical examples and use cases
+- [API Documentation](./docs/API.md) — Complete tool reference
+- [Cloudflare Deployment](./docs/CLOUDFLARE_DEPLOYMENT.md) — Deployment guide
+- [Troubleshooting](./docs/TROUBLESHOOTING.md) — Common issues and solutions
 
-# Run specific test file
-npm test -- deputy-tools.test.ts
-```
+### License
 
-### Local Development with Cloudflare Workers
-
-```bash
-# Start local Workers development server
-npm run workers:dev
-
-# View logs
-npm run workers:tail
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! We appreciate:
-
-- 🐛 Bug reports and fixes
-- ✨ New features and tools
-- 📖 Documentation improvements
-- 🧪 Test coverage enhancements
-- 🌍 Translations and internationalization
-
-### How to Contribute
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Run tests (`npm test`)
-5. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
-
-## ❓ FAQ
-
-### How do I get started?
-
-Install the package globally or use npx, then configure your AI assistant with the MCP server. See the [Quick Install](#-quick-install) section.
-
-### Is this free to use?
-
-Yes! The package is MIT licensed and the Câmara API is free and open. No API keys required.
-
-### What AI assistants are supported?
-
-Any MCP-compatible assistant including Claude Desktop, Cursor, Windsurf, Continue.dev, and ChatGPT (via Cloudflare Workers).
-
-### Can I use this in production?
-
-Yes! Deploy to Cloudflare Workers for a production-ready, globally distributed API with caching and rate limiting.
-
-### How often is the data updated?
-
-Data comes directly from the Câmara API in real-time. The server includes smart caching to balance freshness with performance.
-
-### Can I contribute new tools?
-
-Absolutely! We welcome contributions. Check the [Contributing](#-contributing) section and open an issue to discuss your ideas.
-
-### Is there a rate limit?
-
-The Câmara API has rate limits. This server includes built-in rate limiting and caching to help stay within limits. When deployed to Cloudflare Workers, you can configure custom rate limits.
-
-### How do I report bugs?
-
-Open an issue on [GitHub](https://github.com/cristianoaredes/mcp-camara/issues) with details about the bug, steps to reproduce, and your environment.
-
-### Can I use this for commercial projects?
-
-Yes! The MIT license allows commercial use. Please review the [LICENSE](./LICENSE) file for details.
-
-## 🔗 Related Projects
-
-- [MCP DadosBR](https://github.com/cristianoaredes/mcp-dadosbr) - MCP server for Brazilian company (CNPJ) and postal code (CEP) data
-- [Model Context Protocol](https://modelcontextprotocol.io) - Official MCP documentation
-- [Câmara Open Data](https://dadosabertos.camara.leg.br/) - Official API documentation
-
-## 📄 License & Credits
-
-- **License:** MIT License — [LICENSE](./LICENSE)
-- **Data Source:** [Brazilian Chamber of Deputies Open Data API](https://dadosabertos.camara.leg.br/)
-- **Protocol:** Based on [Model Context Protocol](https://modelcontextprotocol.io) by Anthropic
-- **Inspiration:** [MCP DadosBR](https://github.com/cristianoaredes/mcp-dadosbr)
-
-## 👨‍💻 Author
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/cristianoaredes">
-        <img src="https://github.com/cristianoaredes.png?size=100" width="100px;" alt="Cristiano Aredes"/>
-        <br />
-        <sub><b>Cristiano Aredes</b></sub>
-      </a>
-      <br />
-      <a href="https://www.linkedin.com/in/cristianoaredes/">LinkedIn</a> · 
-      <a href="mailto:cristiano@aredes.me">Email</a> · 
-      <a href="https://github.com/cristianoaredes">GitHub</a>
-    </td>
-  </tr>
-</table>
-
-## 💬 Support
-
-- **📖 Documentation:** [docs/](./docs/)
-- **🐛 Issues:** [GitHub Issues](https://github.com/cristianoaredes/mcp-camara/issues)
-- **💡 Discussions:** [GitHub Discussions](https://github.com/cristianoaredes/mcp-camara/discussions)
-- **📧 Email:** [cristiano@aredes.me](mailto:cristiano@aredes.me)
-
-## ⭐ Show Your Support
-
-If this project helped you, please consider:
-
-- ⭐ Starring the repository
-- 🐛 Reporting bugs and issues
-- 💡 Suggesting new features
-- 📖 Improving documentation
-- 🔀 Contributing code
-- 📢 Sharing with others
-
-## 📊 Project Stats
-
-![GitHub stars](https://img.shields.io/github/stars/cristianoaredes/mcp-camara?style=social)
-![GitHub forks](https://img.shields.io/github/forks/cristianoaredes/mcp-camara?style=social)
-![GitHub issues](https://img.shields.io/github/issues/cristianoaredes/mcp-camara)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/cristianoaredes/mcp-camara)
-![GitHub last commit](https://img.shields.io/github/last-commit/cristianoaredes/mcp-camara)
+MIT License — see [LICENSE](./LICENSE). Data provided by [Brazilian Chamber of Deputies Open Data API](https://dadosabertos.camara.leg.br/).
 
 ---
 
-<div align="center">
-
 **Made with ❤️ for transparency and civic engagement 🇧🇷**
-
-**[⬆ Back to Top](#mcp-câmara-dos-deputados-)**
-
-</div>
-
-

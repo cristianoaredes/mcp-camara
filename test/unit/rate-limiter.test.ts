@@ -4,8 +4,8 @@
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { RateLimiter, createRateLimiter } from '../lib/infrastructure/rate-limiter.js';
-import { RateLimitError } from '../lib/shared/utils/errors.js';
+import { RateLimiter, createRateLimiter } from '../../lib/infrastructure/rate-limiter.js';
+import { RateLimitError } from '../../lib/shared/utils/errors.js';
 
 describe('RateLimiter', () => {
   beforeEach(() => {

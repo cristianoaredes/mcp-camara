@@ -4,9 +4,9 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { CamaraServer } from '../lib/core/mcp-server.js';
-import { HttpAdapter, SSEAdapter } from '../lib/adapters/cli.js';
-import type { MCPServerConfig } from '../lib/config/index.js';
+import { CamaraServer } from '../../lib/core/mcp-server.js';
+import { HttpAdapter, SSEAdapter } from '../../lib/adapters/cli.js';
+import type { MCPServerConfig } from '../../lib/config/index.js';
 import type { Server as HttpServer } from 'http';
 
 describe('Transport Integration Tests', () => {
