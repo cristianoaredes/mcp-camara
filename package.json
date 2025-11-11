@@ -1,6 +1,6 @@
 {
   "name": "@aredes.me/mcp-camara",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Model Context Protocol server for Brazilian Chamber of Deputies (Câmara dos Deputados) Open Data API",
   "main": "build/lib/index.js",
   "type": "module",
@@ -52,7 +52,9 @@
   "homepage": "https://github.com/aredes/mcp-camara#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
+    "agents": "^0.0.43",
     "express": "^5.1.0",
+    "workers-mcp": "^0.1.0-3",
     "zod": "^3.23.8"
   },
   "devDependencies": {

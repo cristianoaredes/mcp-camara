@@ -2,9 +2,18 @@
 # Documentation: https://developers.cloudflare.com/workers/wrangler/configuration/
 
 name = "mcp-camara"
-main = "build/lib/workers/worker.js"
+main = "build/lib/workers/mcp-agent.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
+
+# Durable Objects configuration for MCP Agent
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["CamaraMCP"]
+
+[[durable_objects.bindings]]
+name = "MCP_OBJECT"
+class_name = "CamaraMCP"
 
 # Development environment (default)
 [env.development]
@@ -31,6 +40,11 @@ MCP_DISABLE_RATE_LIMIT = "false"
 # Production environment
 [env.production]
 name = "mcp-camara"
+
+# Durable Objects for production
+[[env.production.durable_objects.bindings]]
+name = "MCP_OBJECT"
+class_name = "CamaraMCP"
 
 # KV namespaces for production
 # Create these with: wrangler kv:namespace create MCP_CACHE --env production
