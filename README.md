@@ -117,23 +117,39 @@ Pode buscar informações sobre o deputado com ID 220593?
 ## 🛠️ Ferramentas Disponíveis
 
 ### 👥 Deputados (15 ferramentas)
+
+Obtenha informações completas sobre deputados federais brasileiros:
+
 - 🔍 **`deputados_listar`** — Lista deputados com filtros (nome, partido, UF, legislatura)
-- 📋 **`deputados_obter`** — Detalhes completos de um deputado
-- 💰 **`deputados_despesas`** — Despesas e reembolsos
-- 🎤 **`deputados_discursos`** — Discursos em plenário
-- 📅 **`deputados_eventos`** — Participação em eventos
-- 📊 **`deputados_frentes`** — Frentes parlamentares
-- 🏛️ **`deputados_orgaos`** — Órgãos e comissões
-- 📜 **`deputados_profissoes`** — Lista de profissões
-- E mais...
+- 📋 **`deputados_obter`** — Detalhes completos incluindo biografia e contato
+- 💰 **`deputados_despesas`** — Despesas e reembolsos com detalhamento completo
+- 🎤 **`deputados_discursos`** — Discursos em plenário e intervenções parlamentares
+- 📅 **`deputados_eventos`** — Participação em eventos e registros de presença
+- 📊 **`deputados_frentes`** — Frentes parlamentares e bancadas temáticas
+- 🏛️ **`deputados_orgaos`** — Participação em órgãos e comissões
+- 📜 **`deputados_profissoes`** — Lista de profissões declaradas por deputados
+- 📄 **`deputados_ocupacoes`** — Ocupações profissionais
+- 🎓 **`deputados_historico`** — Histórico legislativo e mandatos
+- 📸 **`deputados_foto`** — URL da fotografia oficial
+- 🗳️ **`deputados_mesa`** — Cargos ocupados na Mesa Diretora
+- 📋 **`deputados_liderancas`** — Posições de liderança
+- 🏅 **`deputados_cargos`** — Cargos atuais e anteriores
+- 📊 **`deputados_votacoes`** — Registro de votações e posicionamentos
 
 ### 📜 Proposições (10 ferramentas)
-- 🔍 **`proposicoes_listar`** — Lista proposições com filtros
-- 📋 **`proposicoes_obter`** — Detalhes de uma proposição
-- 👥 **`proposicoes_autores`** — Autores da proposição
-- 📄 **`proposicoes_relacionadas`** — Proposições relacionadas
-- 🗳️ **`proposicoes_votacoes`** — Votações da proposição
-- E mais...
+
+Acesse propostas legislativas, projetos de lei e emendas:
+
+- 🔍 **`proposicoes_listar`** — Lista proposições com filtros avançados (tipo, ano, autor, situação)
+- 📋 **`proposicoes_obter`** — Detalhes completos incluindo texto integral e situação
+- 👥 **`proposicoes_autores`** — Autores e coautores de proposições
+- 📄 **`proposicoes_relacionadas`** — Proposições relacionadas e dependências
+- 🗳️ **`proposicoes_votacoes`** — Todas as votações de uma proposição
+- 📝 **`proposicoes_tramitacoes`** — Histórico de tramitação e situação atual
+- 🏛️ **`proposicoes_temas`** — Classificação temática
+- 📎 **`proposicoes_arquivos`** — Documentos e arquivos anexados
+- 🔗 **`proposicoes_referencias`** — Referências legais e citações
+- 📊 **`proposicoes_tipos`** — Tipos de propostas legislativas
 
 ### 🗳️ Votações (4 ferramentas)
 - 🔍 **`votacoes_listar`** — Lista votações
@@ -149,28 +165,47 @@ Pode buscar informações sobre o deputado com ID 220593?
 - 🗳️ **`orgaos_votacoes`** — Votações da comissão
 
 ### 🎯 Partidos (6 ferramentas)
-- 🔍 **`partidos_listar`** — Lista partidos políticos
-- 📋 **`partidos_obter`** — Detalhes de um partido
-- 👥 **`partidos_membros`** — Membros do partido
-- 🤝 **`blocos_listar`** — Lista blocos partidários
-- 📋 **`blocos_obter`** — Detalhes de um bloco
-- E mais...
+
+Analise partidos políticos e blocos parlamentares:
+
+- 🔍 **`partidos_listar`** — Lista todos os partidos políticos registrados
+- 📋 **`partidos_obter`** — Detalhes do partido incluindo ideologia e liderança
+- 👥 **`partidos_membros`** — Membros atuais e filiações partidárias
+- 🤝 **`blocos_listar`** — Lista blocos parlamentares e coligações
+- 📋 **`blocos_obter`** — Composição e partidos membros do bloco
+- 🏛️ **`partidos_liderancas`** — Posições de liderança partidária
 
 ### 📅 Eventos (7 ferramentas)
-- 🔍 **`eventos_listar`** — Lista eventos legislativos
-- 📋 **`eventos_obter`** — Detalhes de um evento
-- 🏛️ **`eventos_orgaos`** — Eventos por órgão
-- 👥 **`eventos_deputados`** — Eventos por deputado
-- 📜 **`eventos_pauta`** — Pauta do evento
-- E mais...
+
+Acompanhe o calendário e atividades legislativas:
+
+- 🔍 **`eventos_listar`** — Lista todos os eventos legislativos com filtros de data e tipo
+- 📋 **`eventos_obter`** — Informações detalhadas incluindo local e participantes
+- 🏛️ **`eventos_orgaos`** — Eventos organizados por comissões ou órgãos específicos
+- 👥 **`eventos_deputados`** — Eventos com participação de deputado específico
+- 📜 **`eventos_pauta`** — Pauta e itens de discussão do evento
+- 📝 **`eventos_situacoes`** — Situação do evento (agendado, em andamento, concluído, cancelado)
+- 🎯 **`eventos_tipos`** — Tipos de eventos legislativos
 
 ### 📚 Dados de Referência (15 ferramentas)
-- 🏛️ **`referencias_legislaturas`** — Lista legislaturas
-- 🎯 **`referencias_situacoes_deputado`** — Situações de deputados
-- 📊 **`referencias_situacoes_evento`** — Situações de eventos
-- 🗳️ **`referencias_situacoes_proposicao`** — Situações de proposições
-- 📋 **`referencias_tipos_proposicao`** — Tipos de proposições
-- E mais...
+
+Acesse tabelas de referência e sistemas de classificação:
+
+- 🏛️ **`referencias_legislaturas`** — Lista todas as legislaturas com períodos
+- 🎯 **`referencias_situacoes_deputado`** — Códigos de situação de deputados (ativo, licenciado, etc.)
+- 📊 **`referencias_situacoes_evento`** — Classificações de situação de eventos
+- 🗳️ **`referencias_situacoes_proposicao`** — Códigos de situação de proposições
+- 📋 **`referencias_tipos_proposicao`** — Tipos de propostas legislativas (PL, PEC, etc.)
+- 🏛️ **`referencias_tipos_orgao`** — Tipos de órgãos legislativos
+- 📅 **`referencias_tipos_evento`** — Classificações de tipos de eventos
+- 🗳️ **`referencias_tipos_votacao`** — Tipos e procedimentos de votação
+- 🎓 **`referencias_escolaridades`** — Níveis de escolaridade
+- 🌍 **`referencias_ufs`** — Estados e territórios brasileiros
+- 🏙️ **`referencias_municipios`** — Municípios por estado
+- 📊 **`referencias_situacoes_orgao`** — Códigos de situação de comissões
+- 🎯 **`referencias_situacoes_membro`** — Códigos de situação de membros
+- 📜 **`referencias_cargos_orgao`** — Tipos de cargos em comissões
+- 🏅 **`referencias_tipos_lideranca`** — Tipos de posições de liderança
 
 ## 🧪 Testes em Linha de Comando
 
