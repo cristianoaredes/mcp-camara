@@ -88,33 +88,22 @@ export async function handleSSEEndpoint(
     }
   };
 
-  // Handle the SSE connection
+  // Handle the SSE connection asynchronously
   (async () => {
     try {
-      // Send connection established event
+      // Send connection established event IMMEDIATELY
       await sendSSEMessage(
         {
           type: 'connection',
           status: 'connected',
           server: 'mcp-camara',
-          version: '1.0.1',
+          version: '1.0.3',
           timestamp: new Date().toISOString(),
         },
         'connection'
       );
 
-      // Initialize MCP server
-      const config = createWorkerConfig(env);
-      const cache = env.MCP_CACHE ? createKVCache(env.MCP_CACHE, {
-        enabled: true,
-        ttl: config.cacheTTL,
-        maxSize: 0,
-      }) : undefined;
-      
-      const server = new CamaraServer(config, { cache, httpClient: undefined });
-      await server.initialize();
-
-      // Send server capabilities
+      // Send server capabilities BEFORE initializing (to keep stream alive)
       await sendSSEMessage(
         {
           jsonrpc: '2.0',
@@ -126,11 +115,32 @@ export async function handleSSEEndpoint(
             },
             serverInfo: {
               name: 'mcp-camara',
-              version: '1.0.1',
+              version: '1.0.3',
             },
           },
         },
         'message'
+      );
+
+      // NOW initialize MCP server (this may take time)
+      const config = createWorkerConfig(env);
+      const cache = env.MCP_CACHE ? createKVCache(env.MCP_CACHE, {
+        enabled: true,
+        ttl: config.cacheTTL,
+        maxSize: 0,
+      }) : undefined;
+      
+      const server = new CamaraServer(config, { cache, httpClient: undefined });
+      await server.initialize();
+
+      // Send ready event after initialization
+      await sendSSEMessage(
+        {
+          type: 'ready',
+          toolCount: 62,
+          timestamp: new Date().toISOString(),
+        },
+        'ready'
       );
 
       // Keep connection alive with periodic pings
@@ -212,20 +222,24 @@ export async function handleSSEEndpoint(
       // Clean up on connection close (Cloudflare Workers CPU time limit)
       setTimeout(() => {
         clearInterval(pingInterval);
-        writer.close();
+        writer.close().catch(() => {/* ignore close errors */});
       }, 50000); // Close after 50 seconds
     } catch (error) {
       console.error('SSE handler error:', error);
-      await sendSSEMessage(
-        {
-          type: 'error',
-          message: error instanceof Error ? error.message : 'Unknown error',
-        },
-        'error'
-      );
-      writer.close();
+      try {
+        await sendSSEMessage(
+          {
+            type: 'error',
+            message: error instanceof Error ? error.message : 'Unknown error',
+          },
+          'error'
+        );
+      } catch (e) {
+        // Ignore write errors
+      }
+      writer.close().catch(() => {/* ignore close errors */});
     }
-  })();
+  })().catch(err => console.error('SSE async error:', err));
 
   return new Response(readable, {
     status: 200,
