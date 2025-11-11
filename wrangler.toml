@@ -1,0 +1,62 @@
+# Cloudflare Workers configuration for MCP Câmara dos Deputados Server
+# Documentation: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "mcp-camara"
+main = "build/lib/workers/worker.js"
+compatibility_date = "2024-01-01"
+node_compat = true
+
+# Development environment (default)
+[env.development]
+name = "mcp-camara-dev"
+
+# KV namespaces for development
+# Create these with: wrangler kv:namespace create MCP_CACHE
+#                    wrangler kv:namespace create RATE_LIMIT_KV
+[[env.development.kv_namespaces]]
+binding = "MCP_CACHE"
+id = "YOUR_DEV_CACHE_KV_ID"
+
+[[env.development.kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "YOUR_DEV_RATE_LIMIT_KV_ID"
+
+# Development environment variables
+[env.development.vars]
+CAMARA_API_BASE_URL = "https://dadosabertos.camara.leg.br/api/v2"
+MCP_CACHE_TTL = "3600"
+LOG_LEVEL = "DEBUG"
+MCP_DISABLE_RATE_LIMIT = "false"
+
+# Production environment
+[env.production]
+name = "mcp-camara"
+
+# KV namespaces for production
+# Create these with: wrangler kv:namespace create MCP_CACHE --env production
+#                    wrangler kv:namespace create RATE_LIMIT_KV --env production
+[[env.production.kv_namespaces]]
+binding = "MCP_CACHE"
+id = "YOUR_PROD_CACHE_KV_ID"
+
+[[env.production.kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "YOUR_PROD_RATE_LIMIT_KV_ID"
+
+# Production environment variables
+[env.production.vars]
+CAMARA_API_BASE_URL = "https://dadosabertos.camara.leg.br/api/v2"
+MCP_CACHE_TTL = "3600"
+LOG_LEVEL = "INFO"
+MCP_DISABLE_RATE_LIMIT = "false"
+
+# Secrets (set with: wrangler secret put MCP_API_KEY --env production)
+# MCP_API_KEY - API key for authenticating REST API requests (optional)
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# Observability
+[observability]
+enabled = true

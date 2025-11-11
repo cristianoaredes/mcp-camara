@@ -1,0 +1,70 @@
+{
+  "name": "@aredes.me/mcp-camara",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server for Brazilian Chamber of Deputies (Câmara dos Deputados) Open Data API",
+  "main": "build/lib/index.js",
+  "type": "module",
+  "bin": {
+    "mcp-camara": "build/lib/bin/mcp-camara.js"
+  },
+  "files": [
+    "build/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx lib/bin/mcp-camara.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node build/lib/scripts/postinstall.js",
+    "workers:dev": "wrangler dev",
+    "workers:deploy:dev": "wrangler deploy --env development",
+    "workers:deploy:prod": "wrangler deploy --env production",
+    "workers:tail": "wrangler tail",
+    "workers:tail:prod": "wrangler tail --env production",
+    "workers:kv:create": "npm run workers:kv:create:dev && npm run workers:kv:create:prod",
+    "workers:kv:create:dev": "wrangler kv:namespace create MCP_CACHE && wrangler kv:namespace create RATE_LIMIT_KV",
+    "workers:kv:create:prod": "wrangler kv:namespace create MCP_CACHE --env production && wrangler kv:namespace create RATE_LIMIT_KV --env production"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "camara",
+    "deputados",
+    "brazil",
+    "legislative",
+    "api",
+    "ai",
+    "claude",
+    "cursor"
+  ],
+  "author": "Cristiano Aredes",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aredes/mcp-camara.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aredes/mcp-camara/issues"
+  },
+  "homepage": "https://github.com/aredes/mcp-camara#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "express": "^5.1.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251111.0",
+    "@types/express": "^5.0.5",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "wrangler": "^3.94.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

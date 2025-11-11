@@ -1,0 +1,81 @@
+# Smithery Configuration for Câmara dos Deputados MCP Server
+# https://smithery.ai
+
+name: mcp-camara
+version: 1.0.0
+description: Model Context Protocol server for Brazilian Chamber of Deputies (Câmara dos Deputados) Open Data API. Provides 62 tools across 7 categories for comprehensive legislative data access.
+author: Cristiano Aredes
+license: MIT
+homepage: https://github.com/aredes/mcp-camara
+repository: https://github.com/aredes/mcp-camara
+
+# Runtime requirements
+runtime:
+  type: node
+  version: ">=18.0.0"
+
+# Installation command
+install:
+  command: npx
+  args: ["@aredes.me/mcp-camara"]
+
+# Tool categories and features
+categories:
+  - legislative
+  - government
+  - brazil
+  - data-access
+
+# Environment variable configuration
+configuration:
+  env:
+    - name: CAMARA_API_BASE_URL
+      description: Base URL for the Câmara dos Deputados API
+      default: https://dadosabertos.camara.leg.br/api/v2
+      required: false
+      
+    - name: MCP_CACHE_TTL
+      description: Cache time-to-live in seconds for API responses
+      default: "3600"
+      required: false
+      
+    - name: MCP_DISABLE_CACHE
+      description: Disable response caching (set to 'true' to disable)
+      default: "false"
+      required: false
+      
+    - name: MCP_DISABLE_RATE_LIMIT
+      description: Disable rate limiting (set to 'true' to disable)
+      default: "false"
+      required: false
+      
+    - name: LOG_LEVEL
+      description: Logging level (DEBUG, INFO, WARN, ERROR)
+      default: INFO
+      required: false
+
+# Features and capabilities
+features:
+  - 62 tools across 7 categories (Deputies, Propositions, Votings, Committees, Parties, Events, Reference Data)
+  - Smart caching with LRU eviction
+  - Built-in rate limiting
+  - Full TypeScript implementation
+  - Zod-based input validation
+  - Support for STDIO, HTTP, and SSE transports
+  - Cloudflare Workers deployment support
+
+# Keywords for discoverability
+keywords:
+  - mcp
+  - model-context-protocol
+  - camara
+  - deputados
+  - brazil
+  - legislative
+  - api
+  - ai
+  - claude
+  - cursor
+  - government
+  - politics
+  - congress

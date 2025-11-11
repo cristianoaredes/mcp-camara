@@ -1,0 +1,50 @@
+# Source files (only publish built files)
+lib/
+*.ts
+!*.d.ts
+
+# Tests
+test/
+*.test.ts
+*.test.js
+vitest.config.ts
+
+# Development files
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+
+# Documentation (keep README.md and LICENSE)
+docs/
+*.md
+!README.md
+!README.pt-BR.md
+
+# Build artifacts
+tsconfig.json
+tsconfig.*.json
+
+# Cloudflare Workers
+wrangler.toml
+workers/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Node modules
+node_modules/
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+*~
