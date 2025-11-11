@@ -7,8 +7,55 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 MCP Server implementation for Brazilian Chamber of Deputies (Câmara dos Deputados) Open Data API. A TypeScript-based Model Context Protocol server providing 62 tools across 7 categories to query legislative data, published as NPM package and deployable to Cloudflare Workers.
 
 **📦 Published**: `@aredes.me/mcp-camara` on NPM
-**🌐 Production**: https://mcp-camara.your-subdomain.workers.dev (Cloudflare Workers)
-**🛠️ Local Dev**: STDIO mode via `npm run dev`
+**🌐 Production**: https://mcp-camara.cristianoaredes.workers.dev (Cloudflare Workers)
+**🛠️ Local Dev**: HTTP/SSE mode via `npx wrangler dev` (porta dinâmica, geralmente :60320)
+**🏗️ Architecture**: Cloudflare McpAgent + Durable Objects (desde v1.0.6)
+
+---
+
+## 🏗️ Arquitetura (v1.0.6+)
+
+### Cloudflare Workers + Durable Objects
+
+O servidor agora utiliza a arquitetura oficial do Cloudflare para MCP servers:
+
+- **McpAgent SDK** (`agents@0.0.43`): Classe base que estende DurableObject
+- **Durable Objects**: Estado persistente e sessões gerenciadas automaticamente
+- **SSE Transport**: Server-Sent Events via `SSEEdgeTransport` do agents SDK
+- **Entry Point**: `lib/workers/mcp-agent.ts` (substitui implementação SSE manual)
+
+#### Classe Principal: `CamaraMCP`
+
+```typescript
+export class CamaraMCP extends McpAgent<CamaraMCPEnv> {
+  server = new McpServer({ name: "mcp-camara", version: "1.0.6" });
+  protected declare env: CamaraMCPEnv;
+
+  async init() {
+    // Inicializa HTTP client, cache KV e registra 62 ferramentas
+  }
+}
+
+export default CamaraMCP.mount("/sse");
+```
+
+#### Durable Objects Configuration
+
+```toml
+# wrangler.toml
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["CamaraMCP"]
+
+[[durable_objects.bindings]]
+name = "MCP_OBJECT"
+class_name = "CamaraMCP"
+```
+
+#### Endpoints Disponíveis
+
+- `GET /sse` - Server-Sent Events para conexão MCP
+- Durable Object automático para gerenciamento de estado
 
 ---
 
@@ -75,6 +122,8 @@ Ver lista completa: [README.md](./README.md#ferramentas-disponíveis)
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
+### Opção 1: NPM Package (STDIO)
+
 ```json
 {
   "mcpServers": {
@@ -87,7 +136,81 @@ Ver lista completa: [README.md](./README.md#ferramentas-disponíveis)
 }
 ```
 
-**Ou para desenvolvimento local com HTTP transport**:
+### Opção 2: Cloudflare Workers (Production)
+
+```json
+{
+  "mcpServers": {
+    "camara-production": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/inspector",
+        "https://mcp-camara.cristianoaredes.workers.dev/sse"
+      ],
+      "enabled": true
+    }
+  }
+}
+```
+
+### Opção 3: Development Local (Wrangler Dev)
+
+```json
+{
+  "mcpServers": {
+    "camara-local": {
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/inspector",
+        "http://localhost:60320/sse"
+      ],
+      "enabled": true
+    }
+  }
+}
+```
+
+**Nota**: A porta local (`:60320`) é dinâmica. Rode `npx wrangler dev` no diretório do projeto e verifique a porta no output.
+
+---
+
+## 🚀 Deploy e Desenvolvimento
+
+### Deploy para Cloudflare Workers
+
+```bash
+# Build do projeto
+npm run build
+
+# Deploy para produção
+npm run workers:deploy:prod
+
+# Deploy para desenvolvimento
+npm run workers:deploy:dev
+
+# Tail logs de produção
+npm run workers:tail:prod
+```
+
+### Desenvolvimento Local
+
+```bash
+# Inicia servidor local com hot-reload
+npx wrangler dev
+
+# Servidor fica disponível em http://localhost:<porta-dinâmica>/sse
+# Exemplo: http://localhost:60320/sse
+```
+
+**Logs esperados**:
+```
+[CamaraMCP] Initializing server...
+[CamaraMCP] Registered 62 tools
+[CamaraMCP] Initialized with 62 tools
+[wrangler:inf] Ready on http://localhost:60320
+```
+
+### Ou para desenvolvimento local com HTTP transport (legacy)**:
 ```json
 {
   "mcpServers": {
