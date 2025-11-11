@@ -412,18 +412,108 @@ export default {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
           });
+        } else if (pathname === '/docs') {
+          // Swagger UI endpoint
+          const swaggerHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Câmara - API Documentation</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.10.5/swagger-ui.css" />
+  <style>
+    body { margin: 0; padding: 0; }
+    .topbar { display: none; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5.10.5/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5.10.5/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function() {
+      SwaggerUIBundle({
+        url: '${url.origin}/openapi.json',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      });
+    };
+  </script>
+</body>
+</html>
+          `;
+          response = new Response(swaggerHTML, {
+            status: 200,
+            headers: { 'Content-Type': 'text/html' },
+          });
         } else if (pathname === '/mcp' && request.method === 'POST') {
           response = await handleMCPRequest(request, server);
         } else if (pathname === '/sse' && (request.method === 'GET' || request.method === 'POST')) {
           // SSE endpoint for real-time MCP communication
           return await handleSSEEndpoint(request, env);
+        } else if (pathname === '/' && request.method === 'GET') {
+          // Root endpoint with service information
+          const toolNames = server.getRegistry().getAll().map(t => t.name);
+          response = new Response(
+            JSON.stringify({
+              service: 'MCP Câmara dos Deputados',
+              description: 'Model Context Protocol server for Brazilian Chamber of Deputies data',
+              version: '1.0.2',
+              runtime: 'cloudflare-workers',
+              free_tier: {
+                workers: '100,000 requests/day',
+                kv: '100,000 reads/day, 1,000 writes/day, 1GB storage',
+                note: 'Perfect for MCP remote server hosting',
+              },
+              endpoints: {
+                mcp: '/mcp (HTTP JSON-RPC)',
+                sse: '/sse (Server-Sent Events)',
+                health: '/health',
+                rest: '/{resource}/{id} (deputados, proposicoes, votacoes, eventos)',
+                docs: '/docs (Swagger UI)',
+                openapi: '/openapi.json',
+              },
+              tools: {
+                count: toolNames.length,
+                categories: {
+                  deputies: 15,
+                  propositions: 10,
+                  votings: 4,
+                  committees: 5,
+                  parties: 6,
+                  events: 7,
+                  references: 15,
+                },
+              },
+              documentation: 'https://github.com/cristianoaredes/mcp-camara',
+              npm: 'https://www.npmjs.com/package/@aredes.me/mcp-camara',
+              cloudflare_docs: {
+                agents: 'https://developers.cloudflare.com/agents/',
+                sse: 'https://developers.cloudflare.com/agents/api-reference/http-sse/',
+                pricing: 'https://developers.cloudflare.com/workers/platform/pricing/',
+              },
+            }, null, 2),
+            {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         } else if (request.method === 'GET' && pathname.match(/^\/(deputados|proposicoes|votacoes|eventos)\/\d+$/)) {
           response = await handleRESTRequest(request, server, pathname, env);
         } else {
           response = new Response(
             JSON.stringify({
               error: 'Not Found',
-              message: 'Available endpoints: POST /mcp, GET /sse, GET /health, GET /{resource}/{id}, GET /openapi.json',
+              message: 'Available endpoints: POST /mcp, GET /sse, GET /health, GET /docs, GET /{resource}/{id}, GET /openapi.json',
             }),
             {
               status: 404,
