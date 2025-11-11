@@ -10,6 +10,7 @@ import { createKVCache } from './kv-cache.js';
 import { createKVRateLimiter } from './kv-rate-limiter.js';
 import { RateLimitError } from '../shared/utils/errors.js';
 import { generateOpenAPISpec } from './openapi-spec.js';
+import { handleSSEEndpoint } from './sse.js';
 
 /**
  * Cloudflare Workers environment bindings
@@ -413,13 +414,16 @@ export default {
           });
         } else if (pathname === '/mcp' && request.method === 'POST') {
           response = await handleMCPRequest(request, server);
+        } else if (pathname === '/sse' && (request.method === 'GET' || request.method === 'POST')) {
+          // SSE endpoint for real-time MCP communication
+          return await handleSSEEndpoint(request, env);
         } else if (request.method === 'GET' && pathname.match(/^\/(deputados|proposicoes|votacoes|eventos)\/\d+$/)) {
           response = await handleRESTRequest(request, server, pathname, env);
         } else {
           response = new Response(
             JSON.stringify({
               error: 'Not Found',
-              message: 'Available endpoints: POST /mcp, GET /health, GET /{resource}/{id}, GET /openapi.json',
+              message: 'Available endpoints: POST /mcp, GET /sse, GET /health, GET /{resource}/{id}, GET /openapi.json',
             }),
             {
               status: 404,
