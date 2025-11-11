@@ -314,6 +314,8 @@ curl -X POST https://your-worker.workers.dev/mcp \
 
 #### VPS/Cloud Server
 
+[![Deploy to Hostinger VPS](https://img.shields.io/badge/Deploy%20to-Hostinger%20VPS-673DE6?style=for-the-badge&logo=hostinger&logoColor=white)](https://www.hostinger.com.br/cart?product=vps%3Avps_kvm_2&period=12&referral_type=cart_link&REFERRALCODE=FQLCRISTIRC3&referral_id=019a73b2-a3cd-72b8-8141-76eb55275046)
+
 Para deploy em servidor VPS (Node.js nativo):
 
 ```bash
