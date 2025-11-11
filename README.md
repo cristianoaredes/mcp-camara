@@ -339,9 +339,6 @@ node build/lib/bin/mcp-camara.js
 
 **Opções de VPS recomendadas:**
 - 🚀 [Hostinger VPS KVM](https://www.hostinger.com.br/cart?product=vps%3Avps_kvm_2&period=12&referral_type=cart_link&REFERRALCODE=FQLCRISTIRC3&referral_id=019a73b2-a3cd-72b8-8141-76eb55275046) - A partir de 2 vCPU, 4GB RAM
-- ☁️ AWS EC2, Google Cloud, Azure
-- 🐳 DigitalOcean Droplets
-- 📦 Oracle Cloud (free tier disponível)
 
 **Configuração com PM2 (recomendado):**
 
