@@ -3,8 +3,8 @@
 
 name = "mcp-camara"
 main = "build/lib/workers/worker.js"
-compatibility_date = "2024-01-01"
-node_compat = true
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
 
 # Development environment (default)
 [env.development]
@@ -37,11 +37,11 @@ name = "mcp-camara"
 #                    wrangler kv:namespace create RATE_LIMIT_KV --env production
 [[env.production.kv_namespaces]]
 binding = "MCP_CACHE"
-id = "YOUR_PROD_CACHE_KV_ID"
+id = "129580d078304e9d88b8eb53e65d6a5b"
 
 [[env.production.kv_namespaces]]
 binding = "RATE_LIMIT_KV"
-id = "YOUR_PROD_RATE_LIMIT_KV_ID"
+id = "eb54762eb539437990093d6160b126da"
 
 # Production environment variables
 [env.production.vars]

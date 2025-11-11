@@ -3,7 +3,7 @@
  * Provides distributed caching across Workers instances using KV storage
  */
 
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 import type { QueryParams } from '../shared/types/index.js';
 import type { CacheConfig } from '../core/cache.js';
 import type { CacheInterface } from '../core/tools.js';

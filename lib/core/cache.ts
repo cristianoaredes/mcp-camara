@@ -3,7 +3,7 @@
  * Provides caching for API responses to improve performance
  */
 
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 import { CacheError } from '../shared/utils/errors.js';
 import type { QueryParams } from '../shared/types/index.js';
 import type { CacheInterface } from './tools.js';
