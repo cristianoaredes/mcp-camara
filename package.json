@@ -1,6 +1,6 @@
 {
   "name": "@aredes.me/mcp-camara",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Model Context Protocol server for Brazilian Chamber of Deputies (Câmara dos Deputados) Open Data API",
   "main": "build/lib/index.js",
   "type": "module",
